@@ -1,6 +1,6 @@
 package escobar.andres.formacion.ejemplos;
 
-public class Conversiones {
+public class ConversionesDeStringAPrimitivos {
 	public static void main(String[] args) {
 		String intTexto ="54";
 		
