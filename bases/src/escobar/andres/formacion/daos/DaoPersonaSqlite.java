@@ -4,10 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import escobar.andres.formacion.bibliotecas.Dao;
 import escobar.andres.formacion.bibliotecas.DaoException;
 import escobar.andres.formacion.bibliotecas.DaoJdbc;
 import escobar.andres.formacion.pojos.Persona;
+import escobar.andres.formacion.pojos.Rol;
 
 public class DaoPersonaSqlite extends DaoJdbc<Persona> implements DaoPersona {
 
@@ -17,23 +17,48 @@ public class DaoPersonaSqlite extends DaoJdbc<Persona> implements DaoPersona {
 
 	@Override
 	public Iterable<Persona> obtenerTodos() {
-		return ejecutarConsultaSql("SELECT * FROM personas", rs -> filAObjeto(rs));
+		return ejecutarConsultaSql("SELECT * FROM personas", rs -> filaAObjeto(rs));
+	}
+
+	@Override
+	public Iterable<Persona> obtenerTodosConRol() {
+		return ejecutarConsultaSql("""
+				SELECT p.*, r.nombre rol_nombre, r.descripcion rol_descripcion
+				FROM personas p
+				JOIN roles r ON p.rol_id = r.id;
+				""", rs -> filaAObjetoConRol(rs));
+	}
+
+	@Override
+	public Persona obtenerPorIdConRol(Long id) {
+		return ejecutarConsultaSqlUno("""
+				SELECT p.*, r.nombre rol_nombre, r.descripcion rol_descripcion
+				FROM personas p
+				JOIN roles r ON p.rol_id = r.id
+				WHERE p.id=?
+				""", rs -> filaAObjeto(rs), id);
+	}
+	
+	@Override
+	public Iterable<Persona> obtenerPorNombre(String nombre) {
+		return ejecutarConsultaSql("SELECT * FROM personas WHERE nombre LIKE ?", rs -> filaAObjeto(rs), "%" + nombre + "%");
 	}
 
 	@Override
 	public Persona obtenerPorId(Long id) {
-		return ejecutarConsultaSqlUno("SELECT * FROM personas WHERE id=?", rs -> filAObjeto(rs), id);
+		return ejecutarConsultaSqlUno("SELECT * FROM personas WHERE id=?", rs -> filaAObjeto(rs), id);
 	}
 
 	@Override
 	public void insertar(Persona persona) {
-		ejecutarConsultaSql("INSERT INTO personas (nombre, fecha_nacimiento) VALUES(?,?)", persona.getNombre(),
-				persona.getFechaNacimiento() == null ? null : persona.getFechaNacimiento().toString());
+		ejecutarConsultaSql("INSERT INTO personas (nombre, fecha_nacimiento, rol_id) VALUES (?,?,?)",
+				objetoAFila(persona));
 	}
 
 	@Override
 	public void modificar(Persona persona) {
-		ejecutarConsultaSql("UPDATE personas SET nombre=?, fecha_nacimiento=? WHERE id=?", objetoAFila(persona));
+		ejecutarConsultaSql("UPDATE personas SET nombre=?, fecha_nacimiento=?, rol_id=? WHERE id=?",
+				objetoAFila(persona));
 	}
 
 	@Override
@@ -41,13 +66,14 @@ public class DaoPersonaSqlite extends DaoJdbc<Persona> implements DaoPersona {
 		ejecutarConsultaSql("DELETE FROM personas WHERE id=?", id);
 	}
 
-	private static Persona filAObjeto(ResultSet rs) {
+	private static Persona filaAObjeto(ResultSet rs) {
 		try {
 			var id = rs.getLong("id");
 			var nombre = rs.getString("nombre");
 
 			var fechaNacimientoOriginal = rs.getString("fecha_nacimiento");
-			var fechaNacimiento = fechaNacimientoOriginal == null ? null : LocalDate.parse(fechaNacimientoOriginal);
+			var fechaNacimiento = fechaNacimientoOriginal == null || fechaNacimientoOriginal.isBlank() ? null
+					: LocalDate.parse(fechaNacimientoOriginal);
 
 			return new Persona(id, nombre, fechaNacimiento);
 		} catch (SQLException e) {
@@ -55,10 +81,33 @@ public class DaoPersonaSqlite extends DaoJdbc<Persona> implements DaoPersona {
 		}
 	}
 
+	private static Persona filaAObjetoConRol(ResultSet rs) {
+		try {
+			var id = rs.getLong("id");
+			var nombre = rs.getString("nombre");
+
+			var fechaNacimientoOriginal = rs.getString("fecha_nacimiento");
+			var fechaNacimiento = fechaNacimientoOriginal == null || fechaNacimientoOriginal.isBlank() ? null
+					: LocalDate.parse(fechaNacimientoOriginal);
+
+			var idRol = rs.getLong("rol_id");
+			var nombreRol = rs.getString("rol_nombre");
+			var descripcionRol = rs.getString("rol_descripcion");
+
+			var rol = new Rol(idRol, nombreRol, descripcionRol);
+
+			return new Persona(id, nombre, fechaNacimiento, rol);
+		} catch (SQLException e) {
+			throw new DaoException("No se ha podido hacer la operación con la base de datos", e);
+		}
+	}
+
 	private static Object[] objetoAFila(Persona persona) {
 		return new Object[] { persona.getNombre(),
-				persona.getFechaNacimiento() == null ? null : persona.getFechaNacimiento().toString(), persona.getId() };
+				persona.getFechaNacimiento() == null ? null : persona.getFechaNacimiento().toString(),
+				persona.getRol().getId(), persona.getId() };
 	}
+}
 
 	/*
 	 * Primeras Sqlite
@@ -142,5 +191,3 @@ public class DaoPersonaSqlite extends DaoJdbc<Persona> implements DaoPersona {
 	 * DaoException("No se ha podido hacer la operación con la base de datos", e);
 	 * }* }
 	 */
-
-}

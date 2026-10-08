@@ -16,29 +16,30 @@ public class Persona  implements Serializable {
 	protected String nombre;
 	protected LocalDate fechaNacimiento;
 	
-	//protected Rol rol;
+	protected Rol rol;
 
 	// CONSTRUCTORES
-	public Persona(Long id, String nombre, LocalDate fechaNacimiento) {
+	public Persona(Long id, String nombre, LocalDate fechaNacimiento, Rol rol) {
 		setId(id);
 		setNombre(nombre);
 		setFechaNacimiento(fechaNacimiento);
+		setRol(rol);
 	}
 	
-	/*public Persona(Long id, String nombre, LocalDate fechaNacimiento) {
+	public Persona(Long id, String nombre, LocalDate fechaNacimiento) {
 		this(id, nombre, fechaNacimiento, null);
-	}*/
+	}
 	
 	public Persona(String nombre, LocalDate fechaNacimiento) {
-		this(null, nombre, fechaNacimiento);
+		this(null, nombre, fechaNacimiento, null);
 	}
 	
 	public Persona(String nombre) {
-		this(null, nombre, null);
+		this(null, nombre, null, null);
 	}
 	
 	public Persona() {
-		this(null, "ANONIMO", null);
+		this(null, "ANONIMO", null, null);
 	}
 	
 	// Constructor de copia
@@ -84,13 +85,13 @@ public class Persona  implements Serializable {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	
-	/*public Rol getRol() {
+	public Rol getRol() {
 		return rol;
 	}
 
 	public void setRol(Rol rol) {
 		this.rol = rol;
-	}*/
+	}
 
 	public int getEdad() {
 		return Period.between(fechaNacimiento, LocalDate.now()).getYears();
@@ -102,7 +103,7 @@ public class Persona  implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(fechaNacimiento, id, nombre);
+		return Objects.hash(fechaNacimiento, id, nombre, rol);
 	}
 
 	@Override
@@ -115,12 +116,12 @@ public class Persona  implements Serializable {
 			return false;
 		Persona other = (Persona) obj;
 		return Objects.equals(fechaNacimiento, other.fechaNacimiento) && Objects.equals(id, other.id)
-				&& Objects.equals(nombre, other.nombre);
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(rol, other.rol);
 	}
 
 	@Override
 	public String toString() {
-		return "Persona [id=" + id + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + ", rol="
+		return "Persona [id=" + id + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + ", rol=" + rol
 				+ "]";
 	}
 }
