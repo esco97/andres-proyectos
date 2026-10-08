@@ -1,14 +1,20 @@
 package escobar.andres.formacion.programas;
 
-import static escobar.andres.formacion.bibliotecas.Consola.*;
+import static escobar.andres.formacion.bibliotecas.Consola.leerInteger;
+import static escobar.andres.formacion.bibliotecas.Consola.leerLocalDate;
+import static escobar.andres.formacion.bibliotecas.Consola.leerString;
 
-import escobar.andres.formacion.bibliotecas.Dao;
 import escobar.andres.formacion.daos.DaoPersona;
 import escobar.andres.formacion.daos.DaoPersonaSqlite;
+import escobar.andres.formacion.daos.DaoRol;
+import escobar.andres.formacion.daos.DaoRolSqlite;
 import escobar.andres.formacion.pojos.Persona;
 
 public class MantenimientoPersonasConsola {
-	private static final DaoPersona DAO = new DaoPersonaSqlite("jdbc:sqlite:bdd/tienda.db");
+	private static final String URL_SQLITE = "jdbc:sqlite:bdd/tienda.db";
+	
+	private static final DaoPersona DAO = new DaoPersonaSqlite(URL_SQLITE);
+	private static final DaoRol DAO_ROL = new DaoRolSqlite(URL_SQLITE);
 	
 	private static final boolean CON_ID = true;
 	private static final boolean SIN_ID = false;
@@ -33,6 +39,10 @@ public class MantenimientoPersonasConsola {
 				4. Modificar
 				5. Borrar
 
+				6. Listado roles
+				7. Obtener rol por id
+				
+				
 				0. Salir
 				""");
 
@@ -45,6 +55,8 @@ public class MantenimientoPersonasConsola {
 		case 3 -> anyadir();
 		case 4 -> modificar();
 		case 5 -> borrar();
+		case 6 -> listadoRoles();
+		case 7 -> buscarRol();
 		case 0 -> System.out.println("Gracias por usar esta aplicación");
 		default -> System.out.println("Opción incorrecta");
 		}
@@ -80,6 +92,20 @@ public class MantenimientoPersonasConsola {
 		var id = leerInteger("Dime el id a borrar");
 
 		DAO.borrar((long) id);
+	}
+
+	private static void listadoRoles() {
+		for(var rol: DAO_ROL.obtenerTodos()) {
+			System.out.println(rol);
+		}
+	}
+
+	private static void buscarRol() {
+		var id = leerInteger("Dime el id del rol");
+		
+		var rol = DAO_ROL.obtenerPorId((long)id);
+		
+		System.out.println(rol);
 	}
 
 	private static void mostrarFilaPersona(Persona persona) {
