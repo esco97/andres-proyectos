@@ -6,10 +6,23 @@ package escobar.andres.formacion.bibliotecas;
 // Delete
 
 public interface Dao <T>{
-	Iterable<T> obtenerTodos();
-	T obtenerPorId(Long id);
+	default Iterable<T> obtenerTodos() {
+		throw new UnsupportedOperationException("NO IMPLEMENTADO");
+	}
 	
-	void insertar(T objeto);
-	void modificar(T objeto);
-	void borrar(Long id);
+	default T obtenerPorId(Long id) {
+		throw new UnsupportedOperationException("NO IMPLEMENTADO");
+	}
+	
+	default void insertar(T objeto) {
+		throw new UnsupportedOperationException("NO IMPLEMENTADO");
+	}
+	
+	default void modificar(T objeto) {
+		throw new UnsupportedOperationException("NO IMPLEMENTADO");
+	}
+	
+	default void borrar(Long id){
+		throw new UnsupportedOperationException("NO IMPLEMENTADO");
+	}
 }

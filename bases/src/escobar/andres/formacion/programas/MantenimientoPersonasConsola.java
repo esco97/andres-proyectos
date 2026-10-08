@@ -3,11 +3,12 @@ package escobar.andres.formacion.programas;
 import static escobar.andres.formacion.bibliotecas.Consola.*;
 
 import escobar.andres.formacion.bibliotecas.Dao;
+import escobar.andres.formacion.daos.DaoPersona;
 import escobar.andres.formacion.daos.DaoPersonaSqlite;
 import escobar.andres.formacion.pojos.Persona;
 
 public class MantenimientoPersonasConsola {
-	private static final Dao<Persona> DAO = new DaoPersonaSqlite("jdbc:sqlite:bdd/tienda.db");
+	private static final DaoPersona DAO = new DaoPersonaSqlite("jdbc:sqlite:bdd/tienda.db");
 	
 	private static final boolean CON_ID = true;
 	private static final boolean SIN_ID = false;

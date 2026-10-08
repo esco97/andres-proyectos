@@ -9,7 +9,7 @@ import escobar.andres.formacion.bibliotecas.DaoException;
 import escobar.andres.formacion.bibliotecas.DaoJdbc;
 import escobar.andres.formacion.pojos.Persona;
 
-public class DaoPersonaSqlite extends DaoJdbc<Persona> implements Dao<Persona> {
+public class DaoPersonaSqlite extends DaoJdbc<Persona> implements DaoPersona {
 
 	public DaoPersonaSqlite(String url) {
 		super(url);
