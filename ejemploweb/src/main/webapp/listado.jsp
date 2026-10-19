@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="jakarta.tags.core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Listado</title>
-</head>
-<body>
+<%@ include file="/includes/cabecera.jsp" %>
 
 	<ul>
 		<c:forEach items="${personas}" var="persona">
@@ -15,5 +8,4 @@
 		</c:forEach>
 	</ul>
 
-</body>
-</html>
+<%@ include file="/includes/pie.jsp" %>>
