@@ -10,9 +10,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class ListadoServlet
- */
 @WebServlet("/listado")
 public class ListadoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,7 +21,7 @@ public class ListadoServlet extends HttpServlet {
 		// Ejecutar lógica de negocio
 		var dao = new DaoPersonaSqlite("jdbc:sqlite:C:/Users/Andres/git/andres-proyectos-bueno/bases/bdd/tienda.db");
 
-		var personas = dao.obtenerTodos();
+		var personas = dao.obtenerTodosConRol();
 
 		// Preparar modelo para siguiente vista
 		request.setAttribute("personas", personas);
