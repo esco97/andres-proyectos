@@ -13,13 +13,17 @@
 	</thead>
 
 	<tbody>
+		<c:forEach items="${productos}" var="p">
 		<tr>
-			<th>1</th>
-			<th>Portatil</th>
-			<th>1024,23€</th>
-			<td><a href="formulario">Editar</a> <a href="listado">Borrar</a>
+			<th>${p.id}</th>
+			<td>${p.nombre}</td>
+				<td><fmt:formatNumber type="currency" value="${p.precio}"/></td>
+			<td> 
+				<a href="formulario?id${p.id}">Editar</a>
+				<a href="listado">Borrar</a>
 			</td>
 		</tr>
+		</c:forEach>
 	</tbody>
 
 	<tfoot>
