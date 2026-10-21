@@ -1,10 +1,8 @@
 package escobar.andres.formacion.tienda.controladores;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.List;
 
-import escobar.andres.formacion.tienda.modelos.Producto;
+import escobar.andres.formacion.tienda.mocks.TiendaMock;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,14 +20,8 @@ public class ListadoAdminServlet extends HttpServlet {
 		// Convertir la información al formato necesario
 		// Crear objeto basado en información individual
 		// Ejecutar lógica de negocio
-			var productos = List.of(
-				new Producto(1L, "Portátil", new BigDecimal("1234.56")),
-				new Producto(2L, "Ratón", new BigDecimal("34.56")),
-				new Producto(3L, "Monitor", new BigDecimal("234.56"))
-				);
-		
 		// Preparar modelo para siguiente vista
-			request.setAttribute("productos", productos);
+			request.setAttribute("productos", TiendaMock.PRODUCTOS.values());
 		
 		// Saltar a la siguiente vista
 		request.getRequestDispatcher("/WEB-INF/vistas/admin/listado.jsp").forward(request, response);

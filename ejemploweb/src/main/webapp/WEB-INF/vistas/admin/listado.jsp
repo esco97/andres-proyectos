@@ -14,15 +14,13 @@
 
 	<tbody>
 		<c:forEach items="${productos}" var="p">
-		<tr>
-			<th>${p.id}</th>
-			<td>${p.nombre}</td>
-				<td><fmt:formatNumber type="currency" value="${p.precio}"/></td>
-			<td> 
-				<a href="formulario?id${p.id}">Editar</a>
-				<a href="listado">Borrar</a>
-			</td>
-		</tr>
+			<tr>
+				<th>${p.id}</th>
+				<td>${p.nombre}</td>
+				<td><fmt:formatNumber type="currency" value="${p.precio}" /></td>
+				<td><a href="formulario?id=${p.id}">Editar</a> <a href="listado">Borrar</a>
+				</td>
+			</tr>
 		</c:forEach>
 	</tbody>
 
