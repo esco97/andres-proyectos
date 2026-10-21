@@ -30,5 +30,10 @@ public class DaoProductoSqlite extends DaoJdbc<Producto> implements DaoProducto{
 		System.out.println("MODIFICAR: " + producto);
 	}
 
+	@Override
+	public void borrar(Long id) {
+		System.out.println("BORRAR: " + id);
+	}
+
 	
 }

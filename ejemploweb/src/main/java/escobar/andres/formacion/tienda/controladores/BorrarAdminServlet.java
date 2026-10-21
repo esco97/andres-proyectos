@@ -2,6 +2,8 @@ package escobar.andres.formacion.tienda.controladores;
 
 import java.io.IOException;
 
+import escobar.andres.formacion.tienda.accesodatos.DaoProducto;
+import escobar.andres.formacion.tienda.accesodatos.DaoProductoSqlite;
 import escobar.andres.formacion.tienda.mocks.TiendaMock;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,13 +26,13 @@ public class BorrarAdminServlet extends HttpServlet {
 		
 		// Crear objeto basado en información individual
 		// Ejecutar lógica de negocio
-		System.out.println("Borrando producto id " + id);
+		DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/Andres/git/andres-proyectos-bueno/bases/bdd/tienda.db");
+		
+		dao.borrar(id);
 		
 		// Preparar modelo para siguiente vista
-			request.setAttribute("productos", TiendaMock.PRODUCTOS.values());
-		
 		// Saltar a la siguiente vista
-		request.getRequestDispatcher("/WEB-INF/vistas/admin/listado.jsp").forward(request, response);
+		response.sendRedirect("listado");
 
 	}
 
