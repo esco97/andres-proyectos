@@ -4,9 +4,10 @@
 
 <!--<p>${producto}</p>-->
 
-<form action="listado" method="post">
-		<input type="text" placeholder="Nombre" value="${producto.nombre}">
-		<input type="number" step=".01" placeholder="Precio" value="${producto.precio}">
+<form action="formulario" method="post">
+		<input name=id type="hidden" value="${producto.id}">
+		<input name="nombre" type="text" placeholder="Nombre" value="${producto.nombre}">
+		<input name="precio" type="number" step=".01" placeholder="Precio" value="${producto.precio}">
 		
 		<button>Guardar</button>
 	</form>
