@@ -3,7 +3,8 @@ package escobar.andres.formacion.tienda.controladores;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import escobar.andres.formacion.tienda.mocks.TiendaMock;
+import escobar.andres.formacion.tienda.accesodatos.DaoProducto;
+import escobar.andres.formacion.tienda.accesodatos.DaoProductoSqlite;
 import escobar.andres.formacion.tienda.modelos.Producto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,7 +26,8 @@ public class FormularioAdminServlet extends HttpServlet {
 			Long id = Long.parseLong(sId);
 			// Crear objeto basado en información individual
 			// Ejecutar lógica de negocio
-			var producto = TiendaMock.PRODUCTOS.get(id);
+			DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/Andres/git/andres-proyectos-bueno/bases/bdd/tienda.db");
+			var producto = dao.obtenerPorId(id);
 			// Preparar modelo para siguiente vista
 			request.setAttribute("producto", producto);
 		}

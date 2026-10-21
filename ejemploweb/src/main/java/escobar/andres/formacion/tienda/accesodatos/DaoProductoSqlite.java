@@ -15,5 +15,10 @@ public class DaoProductoSqlite extends DaoJdbc<Producto> implements DaoProducto{
 		return TiendaMock.PRODUCTOS.values();
 	}
 
+	@Override
+	public Producto obtenerPorId(Long id) {
+		return TiendaMock.PRODUCTOS.get(id);
+	}
+
 	
 }
