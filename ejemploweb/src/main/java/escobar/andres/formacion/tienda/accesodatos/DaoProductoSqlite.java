@@ -20,5 +20,15 @@ public class DaoProductoSqlite extends DaoJdbc<Producto> implements DaoProducto{
 		return TiendaMock.PRODUCTOS.get(id);
 	}
 
+	@Override
+	public void insertar(Producto producto) {
+		System.out.println("INSERTAR: " + producto);
+	}
+
+	@Override
+	public void modificar(Producto producto) {
+		System.out.println("MODIFICAR: " + producto);
+	}
+
 	
 }

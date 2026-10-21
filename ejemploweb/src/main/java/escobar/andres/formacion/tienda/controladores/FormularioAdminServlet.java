@@ -51,11 +51,12 @@ public class FormularioAdminServlet extends HttpServlet {
 		Producto producto = new Producto(id, nombre, precio);
 		
 		// Ejecutar lógica de negocio
-		if(id == null) {
-			System.out.println("Añadiendo nuevo producto: ");
-		} else {
+		DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/Andres/git/andres-proyectos-bueno/bases/bdd/tienda.db");
 
-			System.out.println("Añadiendo nuevo producto: ");
+		if(id == null) {
+			dao.insertar(producto);
+		} else {
+			dao.modificar(producto);
 		}
 
 		System.out.println(producto);
