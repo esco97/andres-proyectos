@@ -22,7 +22,7 @@ public class ListadoAdminServlet extends HttpServlet {
 		// Convertir la información al formato necesario
 		// Crear objeto basado en información individual
 		// Ejecutar lógica de negocio
-		DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/Andres/git/andres-proyectos-bueno/bases/bdd/tienda.db");
+		DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/Andres/git/andres-proyectos-bueno/ejemploweb/bdd/tienda.db");
 		
 		var productos = dao.obtenerTodos();
 				

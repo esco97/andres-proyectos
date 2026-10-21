@@ -26,7 +26,7 @@ public class FormularioAdminServlet extends HttpServlet {
 			Long id = Long.parseLong(sId);
 			// Crear objeto basado en información individual
 			// Ejecutar lógica de negocio
-			DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/Andres/git/andres-proyectos-bueno/bases/bdd/tienda.db");
+			DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/Andres/git/andres-proyectos-bueno/ejemploweb/bdd/tienda.db");
 			var producto = dao.obtenerPorId(id);
 			// Preparar modelo para siguiente vista
 			request.setAttribute("producto", producto);
@@ -51,7 +51,7 @@ public class FormularioAdminServlet extends HttpServlet {
 		Producto producto = new Producto(id, nombre, precio);
 		
 		// Ejecutar lógica de negocio
-		DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/Andres/git/andres-proyectos-bueno/bases/bdd/tienda.db");
+		DaoProducto dao = new DaoProductoSqlite("jdbc:sqlite:C:/Users/Andres/git/andres-proyectos-bueno/ejemploweb/bdd/tienda.db");
 
 		if(id == null) {
 			dao.insertar(producto);
